@@ -13,32 +13,34 @@ const MessageFormSocial = dynamic(() =>
 );
 
 
-export default function Chats() {
+export default function Home() {
   const { username, secret } = useContext(Context)
   const [showChat, setShowChat] = useState(false)
   const router = useRouter()
 
   useEffect(() => {
-    if(username.length === 0 || secret.length ===0) router.push('/');
-  })
+    if (typeof document !== undefined) {
+      setShowChat(true);
+    }
+  }, []);
 
   useEffect(() => {
-    if (typeof document !== null) {
-      setShowChat(true)
+    if (username === "" || secret === "") {
+      router.push("/");
     }
+  }, [username, secret]);
 
-    if (!showChat) return <div />;
-  })
-
+  if (!showChat) return <div />;
+  
   return (
     <div className="background">
       <div className='shadow'>
         <ChatEngine
-          height='calc(100vh-200px)'
+          height='calc(100vh-212px)'
           projectID='bb8bdada-ce7d-4cc7-9729-60d196201be4'
           userName={username}
           userSecret={secret}
-        renderNewMessageForm={() => <MessageFormSocial/>}
+          renderNewMessageForm={() => <MessageFormSocial />}
         />
       </div>
     </div>
